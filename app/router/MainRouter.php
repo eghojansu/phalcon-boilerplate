@@ -19,11 +19,9 @@ class MainRouter extends Group
             'controller'=>'index'
         ]);
 
-        $this->add(
-            '/',
-            [
-                'action' => 'helloworld'
-            ]
-        );
+        $this->add('/', array('action' => 'index'));
+        $this->add('/create', array('action' => 'create'));
+        $this->add('/update/([0-9]+)', array('action' => 'update', 'id' => 1));
+        $this->add('/delete/([0-9]+)', array('action' => 'delete', 'id' => 1));
     }
 }

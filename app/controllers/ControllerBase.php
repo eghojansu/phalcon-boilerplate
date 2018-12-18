@@ -5,8 +5,9 @@ namespace Application\Controllers;
 use Application\Core\Log;
 use Application\Queue\BasicServer;
 use Application\Utils\CustomUtil;
-use Phalcon\Mvc\Controller;
 use Application\Utils\Slug;
+use Phalcon\Db\Column;
+use Phalcon\Mvc\Controller;
 
 /**
  * @property Slug $slug
@@ -34,6 +35,55 @@ class ControllerBase extends Controller {
 		}
 		$this->view->setLayout( 'base' );
 		$this->basic_server = new BasicServer( $config->get( 'beanstalk' )->basic_worker_name );
+
+		$this->view->setVar('app_name', 'Basic CRUD - Eko Kurniawan');
+		$this->view->setVar('app_page_title', 'Home');
+
+		$db = $this->di->get('db');
+
+		if (!$db->tableExists('message')) {
+			$db->createTable(
+			    'message',
+			    null,
+			    [
+			       'columns' => [
+			            new Column(
+			                'id',
+			                [
+			                    'type'          => Column::TYPE_INTEGER,
+			                    'size'          => 10,
+			                    'notNull'       => true,
+			                    'autoIncrement' => true,
+			                    'primary'       => true,
+			                ]
+			            ),
+			            new Column(
+			                'mailer',
+			                [
+			                    'type'    => Column::TYPE_VARCHAR,
+			                    'size'    => 70,
+			                    'notNull' => true,
+			                ]
+			            ),
+			            new Column(
+			                'recipient',
+			                [
+			                    'type'    => Column::TYPE_VARCHAR,
+			                    'size'    => 70,
+			                    'notNull' => true,
+			                ]
+			            ),
+			            new Column(
+			                'message',
+			                [
+			                    'type'    => Column::TYPE_TEXT,
+			                    'notNull' => true,
+			                ]
+			            ),
+			        ]
+			    ]
+			);
+		}
 	}
 
 	public function beforeExecuteRoute($dispatcher){

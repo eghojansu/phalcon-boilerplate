@@ -17,7 +17,7 @@ return [
 
 		'sqlite' => [
 			'adapter' => 'Sqlite',
-			'dbname'  => env( 'DATABASE_NAME', app_path( 'application.sqlite' ) ),
+			'dbname'  => storage_path(env( 'DATABASE_NAME', 'application.sqlite' )),
 		],
 
 		'postgresql' => [

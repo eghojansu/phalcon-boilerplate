@@ -51,7 +51,7 @@ class Database {
         $hrs    = floor($mins / 60);
         $mins   -= $hrs * 60;
         $offset = sprintf('%+d:%02d', $hrs*$sgn, $mins);
-        $connection->execute( "SET time_zone = '{$offset}';" );
+        // $connection->execute( "SET time_zone = '{$offset}';" );
         $connection->setEventsManager( $em );
 
 		$logger = container()->get( 'logger', [ 'db' ] );

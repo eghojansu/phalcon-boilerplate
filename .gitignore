@@ -47,3 +47,6 @@ supervisor_log/*
 
 ## seed
 #db/seeds/
+
+# basic crud
+/storage/basic_crud.db
